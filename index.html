@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HUE SIXTEEN | 26 Cities × 14 Niches | AI Market Research</title>
+<style>
+:root {
+  --purple:#310381;
+  --purple-2:#4d16a3;
+  --gold:#ffb910;
+  --ink:#111014;
+  --muted:#6e6a75;
+  --paper:#fbfaf7;
+  --white:#fff;
+  --line:#e9e4ef;
+  --soft:#f3eff8;
+  --green:#176b4d;
+  --red:#a63b3b;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+a{color:inherit}
+.container{width:min(1500px,calc(100% - 36px));margin:auto}
+.hero{padding:54px 0 34px;background:linear-gradient(135deg,var(--ink),#25113b 55%,var(--purple));color:#fff}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border:1px solid rgba(255,255,255,.2);border-radius:999px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#f5efff}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--gold)}
+h1{font-size:clamp(34px,5vw,64px);line-height:.98;margin:18px 0 14px;max-width:950px;letter-spacing:-.04em}
+.hero p{max-width:880px;color:#ddd6e7;margin:0;font-size:15px}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.pill{padding:8px 12px;border-radius:999px;font-size:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}
+.nav{position:sticky;top:0;z-index:20;background:rgba(251,250,247,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;gap:8px;overflow:auto;padding:10px 0}
+.nav button{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 13px;font-weight:700;font-size:12px;cursor:pointer}
+.nav button:hover,.nav button.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+section{padding:52px 0 12px}
+.section-head{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:20px}
+.kicker{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--purple);font-weight:800}
+h2{font-size:clamp(26px,3vw,40px);line-height:1.05;margin:5px 0 7px;letter-spacing:-.035em}
+.section-desc{color:var(--muted);max-width:850px;margin:0}
+.note{font-size:12px;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+input,select{border:1px solid var(--line);background:#fff;border-radius:11px;padding:10px 12px;font:inherit;font-size:13px;outline:none}
+input:focus,select:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(49,3,129,.08)}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px;background:#fff}
+table{width:100%;border-collapse:separate;border-spacing:0;min-width:1180px}
+th,td{border-right:1px solid var(--line);border-bottom:1px solid var(--line);vertical-align:top}
+th:last-child,td:last-child{border-right:0}
+tr:last-child td{border-bottom:0}
+th{position:sticky;top:53px;z-index:8;background:#17131d;color:#fff;text-align:left;padding:14px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+th.city-head{width:150px;background:var(--purple)}
+th.model-head{min-width:350px}
+td{padding:14px}
+#cityTable tbody tr:first-child td{padding-top:70px}
+#consensusTable tbody tr:first-child td{padding-top:70px}
+.city-cell{font-weight:800;background:#fff;min-width:150px;white-space:nowrap}.city-index{display:inline-grid;place-items:center;width:24px;height:24px;margin-right:7px;border-radius:7px;background:#eee8f7;color:var(--purple);font-size:10px;font-weight:900}
+.country{display:block;font-size:11px;color:var(--muted);font-weight:600;margin-top:3px}
+.model-card{border:1px solid var(--line);border-radius:13px;padding:12px;background:#fcfbfd}
+.model-card.claude{border-top:3px solid #111}
+.model-card.gemini{border-top:3px solid var(--purple)}
+.model-card.gpt{border-top:3px solid var(--gold)}
+.score-line{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px}
+.score{font-size:18px;font-weight:900}
+.score-label{font-size:10px;color:var(--muted);font-weight:700}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin:7px 0 9px}
+.tag{font-size:11px;padding:5px 7px;border-radius:7px;background:var(--soft);font-weight:700}
+.reason{font-size:12px;color:#4f4a55}
+.gpt-item{padding:8px 0;border-bottom:1px dashed var(--line)}
+.gpt-item:last-child{border-bottom:0}
+.gpt-item strong{font-size:12px}
+.mini-score{font-size:11px;font-weight:900;color:var(--purple)}
+.section-grid{display:grid;grid-template-columns:1fr;gap:14px}
+.niche-row{border:1px solid var(--line);background:#fff;border-radius:15px;overflow:hidden}
+.niche-title{padding:13px 15px;background:#f7f3fb;font-weight:900;display:flex;justify-content:space-between;gap:10px}
+.rank-grid{display:grid;grid-template-columns:repeat(3,1fr)}
+.rank-col{padding:14px;border-right:1px solid var(--line)}
+.rank-col:last-child{border-right:0}
+.rank-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12px;font-weight:900}
+.rank-list{margin:0;padding:0;list-style:none}
+.rank-item{display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:start;padding:8px 0;border-bottom:1px solid #f0edf3;font-size:12px}
+.rank-item:last-child{border-bottom:0}
+.rank-no{width:24px;height:24px;border-radius:7px;background:#f1edf7;display:grid;place-items:center;font-weight:900;color:var(--purple)}
+.rank-score{font-weight:900;white-space:nowrap}
+.rank-sub{font-size:10px;color:var(--muted);margin-top:2px}
+.badge{display:inline-flex;padding:3px 6px;border-radius:6px;font-size:9px;font-weight:800;background:#f4f1f7;color:#5d5763}
+.badge.niche{background:#fff4d7;color:#7d5a00}
+.badge.city{background:#eee8f7;color:var(--purple)}
+.global-score{font-size:16px;font-weight:900}
+.global-row{display:grid;grid-template-columns:190px 100px 1fr;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.global-row:last-child{border-bottom:0}
+.bar{height:8px;background:#eeeaf2;border-radius:99px;overflow:hidden}
+.bar > span{display:block;height:100%;background:var(--purple);border-radius:99px}
+.final-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.final-card{background:#fff;border:1px solid var(--line);border-radius:15px;overflow:hidden}
+.final-card-head{padding:14px;background:#17131d;color:#fff;font-weight:900}
+.final-card-head span{color:#ddd6e7;font-weight:600;font-size:11px;display:block;margin-top:2px}
+.final-body{padding:0}
+.final-item{padding:13px 14px;border-bottom:1px solid var(--line)}
+.final-item:last-child{border-bottom:0}
+.final-item h4{margin:0 0 7px;font-size:13px}
+.city-chips{display:flex;flex-wrap:wrap;gap:6px}
+.city-chip{padding:5px 7px;border-radius:7px;background:var(--soft);font-size:10px;font-weight:800}
+.warning{margin-top:14px;border-left:4px solid var(--gold);background:#fff9e8;padding:12px 14px;border-radius:8px;font-size:12px;color:#5e4b12}
+footer{padding:50px 0 70px;color:var(--muted);font-size:12px}
+.small{font-size:11px;color:var(--muted)}
+
+.consensus-count{display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:28px;padding:0 8px;border-radius:8px;background:var(--purple);color:#fff;font-weight:900;font-size:12px}
+.model-chip{display:inline-flex;padding:5px 8px;border-radius:7px;margin:2px 4px 2px 0;font-size:10px;font-weight:900}
+.model-chip.claude{background:#eee;color:#111}
+.model-chip.gemini{background:#eee8f7;color:var(--purple)}
+.model-chip.gpt{background:#fff4d7;color:#7d5a00}
+.agreement-3{font-weight:900;color:var(--green)}
+.agreement-2{font-weight:900;color:var(--purple)}
+.agreement-1{font-weight:800;color:var(--muted)}
+
+@media(max-width:900px){
+ .container{width:min(100% - 22px,1500px)}
+ .rank-grid,.final-grid{grid-template-columns:1fr}
+ .rank-col{border-right:0;border-bottom:1px solid var(--line)}
+ .rank-col:last-child{border-bottom:0}
+ .section-head{display:block}
+}
+@media print{
+ .nav,.controls{display:none}
+ .hero{background:#fff;color:#111;border-bottom:1px solid #ddd}
+ .hero p,.pill{color:#444}
+ table{min-width:0}
+ th{position:static;background:#eee;color:#111}
+ .table-wrap{overflow:visible}
+}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="container">
+    <div class="eyebrow"><span class="dot"></span> HUE SIXTEEN · August 2026</div>
+    <h1>26 Cities × 14 Niches<br>Claude vs Gemini vs GPT</h1>
+    <p>One consolidated client-hunting view built from the three supplied reports. The dashboard keeps source scores separate and does not invent missing city×niche scores.</p>
+    <div class="legend">
+      <span class="pill">Claude · city priority + niche fit</span>
+      <span class="pill">Gemini · city priority + niche matrix</span>
+      <span class="pill">GPT · city/niche estimates where published</span>
+    </div>
+  </div>
+</header>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <button class="active" data-target="city-section">01 · City</button>
+    <button data-target="top10-section">02 · Niche with Top 10 City</button>
+    <button data-target="top3-section">03 · Niche with Top 3 City</button>
+    <button data-target="final-section">04 · Final Suggestion</button>
+    <button data-target="consensus-section">05 · AI Consensus</button>
+  </div>
+</nav>
+
+<main class="container">
+<section id="city-section">
+  <div class="section-head">
+    <div>
+      <div class="kicker">Section 01</div>
+      <h2>City with Top 3 Niche</h2>
+      <p class="section-desc">Each city shows what Claude, Gemini and GPT prioritized. Claude/Gemini display their published overall city score. GPT displays the published niche scores where available.</p>
+    </div>
+    <div class="note">26 cities · 3 models · source-derived</div>
+  </div>
+  <div class="controls">
+    <input id="citySearch" type="search" placeholder="Search city...">
+    <select id="countryFilter"><option value="">All countries</option></select>
+  </div>
+  <div class="table-wrap">
+    <table id="cityTable">
+      <thead>
+        <tr>
+          <th class="city-head">City Name</th>
+          <th class="model-head">Claude · Top 3 + score + why</th>
+          <th class="model-head">Gemini · Top 3 + score + why</th>
+          <th class="model-head">GPT · Top 3 + score + why</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<section id="top10-section">
+  <div class="section-head">
+    <div>
+      <div class="kicker">Section 02</div>
+      <h2>Niche with Top 10 City</h2>
+      <p class="section-desc">For Claude and Gemini, the source does <b>not</b> publish 14×26 city×niche numeric scores. Their ranking therefore uses the model's overall city priority score only when that niche appears in the city's Top 3. GPT uses its published niche-specific score where one exists.</p>
+    </div>
+  </div>
+  <div id="top10Container" class="section-grid"></div>
+</section>
+
+<section id="top3-section">
+  <div class="section-head">
+    <div>
+      <div class="kicker">Section 03</div>
+      <h2>Niche with Top 3 City</h2>
+      <p class="section-desc">Same source-safe ranking logic as Section 02, reduced to the strongest three available city entries for each model.</p>
+    </div>
+  </div>
+  <div id="top3Container" class="section-grid"></div>
+</section>
+
+<section id="final-section">
+  <div class="section-head">
+    <div>
+      <div class="kicker">Section 04</div>
+      <h2>Final Suggestion</h2>
+      <p class="section-desc">Every niche is mapped to the cities the three reports actually point toward. This section combines city Top-3 recommendations and explicit final targeting strategies.</p>
+    </div>
+  </div>
+  <div class="final-grid" id="finalContainer"></div>
+  <div class="warning"><b>Important:</b> “City score” and “niche score” are different measures. Claude/Gemini did not provide a complete city×niche score matrix, so this dashboard never fabricates one. “N/S” means the supplied report did not publish a numeric score for that city×niche pair.</div>
+</section>
+
+
+<section id="consensus-section">
+  <div class="section-head">
+    <div>
+      <div class="kicker">Section 05</div>
+      <h2>AI Consensus · City × Niche</h2>
+      <p class="section-desc">Each row shows how many of the 3 AI models recommended the same city + niche combination in their Top 3 city recommendations. 1 = one model, 2 = two models, 3 = all three models.</p>
+    </div>
+    <div class="note">3 = strongest agreement</div>
+  </div>
+
+  <div class="controls">
+    <input id="consensusSearch" type="search" placeholder="Search city or niche...">
+    <select id="consensusCount">
+      <option value="">All agreement levels</option>
+      <option value="3">3 AI models</option>
+      <option value="2">2 AI models</option>
+      <option value="1">1 AI model</option>
+    </select>
+    <select id="consensusNiche"><option value="">All niches</option></select>
+  </div>
+
+  <div class="table-wrap">
+    <table id="consensusTable">
+      <thead>
+        <tr>
+          <th class="city-head">City</th>
+          <th>Niche</th>
+          <th style="width:130px">AI Count</th>
+          <th>Recommended By</th>
+          <th>Agreement</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <b>Source basis:</b> Claude.md, Gemini.pdf and GPT.pdf supplied in this conversation. The source reports themselves describe many figures as estimates and note that city×niche SMB data is not available at full granularity.
+</footer>
+</main>
+
+<script>
+const DATA = {"cities": [{"city": "New York", "country": "USA", "claude": {"score": 9, "niches": ["Fashion", "Skincare", "Coffee"], "reason": "Huge volume, global fashion/beauty capital, but agency saturation is very high."}, "gemini": {"score": 9.15, "niches": ["Skincare", "Protein Bars / Granola", "Fashion"], "reason": "12,500+ relevant SMBs; D2C cosmetics/snacks and strong 3D packaging/social demand."}, "gpt": {"niches": [{"name": "SaaS/Tech", "score": 9, "reason": "Large startup/tech scene"}, {"name": "Coffee", "score": 8, "reason": "~1,571 cafés and strong urban café culture"}, {"name": "Real Estate", "score": 8, "reason": "Large brokerage and proptech market"}]}}, {"city": "Los Angeles", "country": "USA", "claude": {"score": 9, "niches": ["Fashion", "Skincare", "Coffee"], "reason": "Large indie fashion/beauty scene and huge creative market; competition is high."}, "gemini": {"score": 9.1, "niches": ["Skincare", "Fashion", "Protein Bars"], "reason": "14,000+ relevant businesses; beauty, fashion, D2C snacks and event/social demand."}, "gpt": {"niches": [{"name": "SaaS/Tech", "score": 8, "reason": "Creative/tech firms and media-tech startups"}, {"name": "Skincare/Beauty", "score": 7, "reason": "Large salon and personal-care market"}, {"name": "Coffee/Health Snacks", "score": 7, "reason": "Vibrant café and health-conscious market"}]}}, {"city": "Chicago", "country": "USA", "claude": {"score": 7, "niches": ["Real Estate", "Granola / Protein Bars", "Dental"], "reason": "Large CPG/food base and property market, but less Tier-A concentration."}, "gemini": {"score": 8.65, "niches": ["Protein Bars / Granola", "SaaS", "Coffee"], "reason": "Large CPG/food cluster; packaging, 3D pouch/box and food-expo needs."}, "gpt": {"niches": [{"name": "Dental Clinics", "score": null, "reason": "Hundreds of clinics with repeat patient marketing needs"}, {"name": "Cleaning Services", "score": null, "reason": "Large urban service market"}, {"name": "SaaS/Tech", "score": null, "reason": "Growing startup hub"}]}}, {"city": "Miami", "country": "USA", "claude": {"score": 8, "niches": ["Real Estate", "Skincare/Wellness", "Fashion"], "reason": "Booming real estate and wellness economy with a dense international event calendar."}, "gemini": {"score": 8.45, "niches": ["Real Estate", "Skincare", "SaaS"], "reason": "6,500+ relevant businesses; luxury property, premium packaging and digital-ad demand."}, "gpt": {"niches": [{"name": "Real Estate", "score": null, "reason": "Booming luxury market"}, {"name": "Hospitality/Coffee", "score": null, "reason": "Strong hospitality and café ecosystem"}, {"name": "Tech", "score": null, "reason": "Emerging tech presence"}]}}, {"city": "Houston", "country": "USA", "claude": {"score": 6, "niches": ["Real Estate", "Dental", "Cleaning"], "reason": "Large population but industrial/energy-led economy; weaker Tier-A signal."}, "gemini": {"score": 7.35, "niches": ["Real Estate", "Specialty Coffee", "Dental Clinics"], "reason": "5,800+ relevant SMBs; property, local coffee and dental demand."}, "gpt": {"niches": [{"name": "Cleaning", "score": null, "reason": "Large local service market"}, {"name": "Healthcare/Dental", "score": null, "reason": "Many clinics serving families"}, {"name": "Real Estate", "score": null, "reason": "Strong property-development market"}]}}, {"city": "Sydney", "country": "Australia", "claude": {"score": 8, "niches": ["Real Estate", "SaaS", "Coffee"], "reason": "Large enterprise/fintech-leaning market with strong property and tech opportunity."}, "gemini": {"score": 8.75, "niches": ["SaaS", "Skincare", "Specialty Coffee"], "reason": "7,500+ businesses; tech, premium D2C/CPG and 3D product visualization."}, "gpt": {"niches": [{"name": "Coffee", "score": 9, "reason": "Major café culture"}, {"name": "SaaS/Tech", "score": 8, "reason": "Asia-Pacific tech hub"}, {"name": "Skincare/Beauty", "score": 7, "reason": "Growing wellness market"}]}}, {"city": "Melbourne", "country": "Australia", "claude": {"score": 9, "niches": ["Coffee", "Fashion", "Skincare"], "reason": "Strong creative economy and repeatedly confirmed coffee capital."}, "gemini": {"score": 8.9, "niches": ["Specialty Coffee", "Fashion", "Granola"], "reason": "6,800+ independent brands; coffee, fashion and food-tech/snack innovation."}, "gpt": {"niches": [{"name": "Coffee", "score": 9, "reason": "~2,835 outlets and major café culture"}, {"name": "Skincare", "score": 7, "reason": "Beauty industry and wellness demand"}, {"name": "SaaS/Tech", "score": 7, "reason": "Health/tech and creative technology scene"}]}}, {"city": "Brisbane", "country": "Australia", "claude": {"score": 7, "niches": ["Coffee", "Real Estate", "SaaS"], "reason": "Fast-rising business market with café culture and property opportunity."}, "gemini": {"score": 8.1, "niches": ["Protein Bars", "Real Estate", "Skincare"], "reason": "4,200+ businesses; nutrition, property and lifestyle brands."}, "gpt": {"niches": [{"name": "Coffee", "score": null, "reason": "Strong café/F&B culture"}, {"name": "Real Estate", "score": null, "reason": "Growing property market"}, {"name": "SaaS", "score": null, "reason": "Rising business/tech market"}]}}, {"city": "Perth", "country": "Australia", "claude": {"score": 5, "niches": ["Real Estate", "Dental", "Cleaning"], "reason": "Smaller, mining-driven economy; weak signal on Tier-A niches."}, "gemini": {"score": 7.7, "niches": ["Real Estate", "Specialty Coffee", "SaaS"], "reason": "3,100+ businesses; property, boutique coffee and B2B tech."}, "gpt": {"niches": [{"name": "Real Estate", "score": null, "reason": "Commercial property market"}, {"name": "Coffee", "score": null, "reason": "Boutique drinks/roaster market"}, {"name": "SaaS", "score": null, "reason": "B2B software opportunity"}]}}, {"city": "Adelaide", "country": "Australia", "claude": {"score": 5, "niches": ["Coffee", "Skincare", "Dried Fruits"], "reason": "Smaller population but strong business survival and food/wine culture."}, "gemini": {"score": 7.3, "niches": ["Specialty Coffee", "Dried Fruits/Nuts", "Dental"], "reason": "2,400+ businesses; premium food/CPG and local producers."}, "gpt": {"niches": [{"name": "Coffee", "score": null, "reason": "Strong café culture"}, {"name": "Food/CPG", "score": null, "reason": "Food and snack ecosystem"}, {"name": "Dental", "score": null, "reason": "Fragmented local clinic market"}]}}, {"city": "London", "country": "UK", "claude": {"score": 9, "niches": ["Fashion", "SaaS", "Coffee"], "reason": "Enormous volume but extremely agency-saturated."}, "gemini": {"score": 9.25, "niches": ["SaaS", "Skincare", "Fashion"], "reason": "15,000+ early/growth-stage companies; tech, D2C beauty and fashion."}, "gpt": {"niches": [{"name": "Fashion", "score": 9, "reason": "Global apparel center"}, {"name": "Skincare/Beauty", "score": 8, "reason": "Huge salon/spa industry"}, {"name": "Coffee", "score": 8, "reason": "~3,700 outlets"}]}}, {"city": "Manchester", "country": "UK", "claude": {"score": 8, "niches": ["Coffee", "Fashion", "Real Estate"], "reason": "Large SMB base, lower operating costs than London and deep indie coffee scene."}, "gemini": {"score": 8.85, "niches": ["Fashion", "Skincare", "SaaS"], "reason": "5,400+ D2C/software businesses; fashion e-commerce and D2C scaleups."}, "gpt": {"niches": [{"name": "Coffee", "score": 8, "reason": "High café density"}, {"name": "Skincare/Beauty", "score": 7, "reason": "Strong local beauty market"}, {"name": "Cleaning", "score": 6, "reason": "Busy small-operator market"}]}}, {"city": "Birmingham", "country": "UK", "claude": {"score": 7, "niches": ["Real Estate", "Dental", "Cleaning"], "reason": "Very large business base but less design-forward consumer-brand density than Manchester."}, "gemini": {"score": 7.45, "niches": ["Real Estate", "Mixed Nuts/CPG", "Dental"], "reason": "3,800+ businesses; property, food CPG distribution and local dental."}, "gpt": {"niches": [{"name": "Skincare", "score": 7, "reason": "Large SMB/beauty market"}, {"name": "Cleaning", "score": 7, "reason": "Large local service market"}, {"name": "Coffee", "score": 6, "reason": "Urban café opportunity"}]}}, {"city": "Edinburgh", "country": "UK", "claude": {"score": 7, "niches": ["SaaS", "Coffee", "Real Estate"], "reason": "Strong SaaS/fintech and university spinouts plus indie coffee."}, "gemini": {"score": 8.25, "niches": ["SaaS", "Specialty Coffee", "Skincare"], "reason": "2,900+ businesses; tech, coffee and premium consumer niches."}, "gpt": {"niches": [{"name": "Skincare/Beauty", "score": null, "reason": "Tourism and local beauty market"}, {"name": "Coffee", "score": null, "reason": "High café density"}, {"name": "Dental", "score": null, "reason": "Prevalent local clinics"}]}}, {"city": "Glasgow", "country": "UK", "claude": {"score": 7, "niches": ["Coffee", "Real Estate", "Skincare"], "reason": "Strong small-business environment and independent roaster scene."}, "gemini": {"score": 7.75, "niches": ["Fashion", "Coffee", "Real Estate"], "reason": "2,600+ businesses; fashion/retail, coffee and property."}, "gpt": {"niches": [{"name": "Skincare/Beauty", "score": null, "reason": "Local beauty/tourism market"}, {"name": "Coffee", "score": null, "reason": "Strong café culture"}, {"name": "Dental", "score": null, "reason": "Prevalent local clinics"}]}}, {"city": "Cork", "country": "Ireland", "claude": {"score": 6, "niches": ["SaaS", "Real Estate", "Dental"], "reason": "#2 Irish startup ecosystem, but smaller total market."}, "gemini": {"score": 8.05, "niches": ["SaaS", "Granola / Artisan Food", "Coffee"], "reason": "1,200+ businesses; tech and artisan food cluster."}, "gpt": {"niches": [{"name": "Skincare/Beauty", "score": null, "reason": "Local salon market"}, {"name": "Cleaning", "score": null, "reason": "Large fragmented service market"}, {"name": "Food & Beverage", "score": null, "reason": "Growing health-food interest"}]}}, {"city": "Galway", "country": "Ireland", "claude": {"score": 6, "niches": ["Skincare", "Real Estate / Dental", "Coffee"], "reason": "Very high micro-business density, but small absolute market."}, "gemini": {"score": 7.55, "niches": ["SaaS", "Specialty Coffee", "Real Estate"], "reason": "850+ businesses and 88% SMB; medtech/SaaS plus boutique CPG."}, "gpt": {"niches": [{"name": "Skincare/Beauty", "score": null, "reason": "Local beauty/CPG opportunity"}, {"name": "Cleaning", "score": null, "reason": "General local services"}, {"name": "Food & Beverage", "score": null, "reason": "Regional food/tourism market"}]}}, {"city": "Limerick", "country": "Ireland", "claude": {"score": 4, "niches": ["Real Estate", "Dental", "Cleaning"], "reason": "Smallest Irish market here, more industrial/engineering oriented."}, "gemini": {"score": 7.05, "niches": ["SaaS", "Real Estate", "Dental Clinics"], "reason": "650+ businesses and 90% SMB; regional property, tech and clinic services."}, "gpt": {"niches": [{"name": "Skincare/Beauty", "score": null, "reason": "Local salons/beauty"}, {"name": "Cleaning", "score": null, "reason": "General local services"}, {"name": "Food & Beverage", "score": null, "reason": "Regional/tourism demand"}]}}, {"city": "Rotterdam", "country": "Netherlands", "claude": {"score": 7, "niches": ["Real Estate", "Coffee", "Dried Fruits/Nuts"], "reason": "Fast-growing port ecosystem; nuts/dried fruit is largely B2B trade."}, "gemini": {"score": 8.45, "niches": ["Healthy Snacks", "Coffee", "Real Estate"], "reason": "3,200+ businesses; food-tech/snacks, coffee and property."}, "gpt": {"niches": [{"name": "Cleaning/Industrial", "score": null, "reason": "Port/industrial service market"}, {"name": "Real Estate", "score": null, "reason": "Property market"}, {"name": "Coffee/Food", "score": null, "reason": "Food/roaster ecosystem"}]}}, {"city": "Eindhoven", "country": "Netherlands", "claude": {"score": 6, "niches": ["SaaS", "Real Estate", "Dental"], "reason": "Strong deep-tech/hardware economy, weaker consumer-brand signal."}, "gemini": {"score": 8.6, "niches": ["SaaS", "Specialty Coffee", "Protein Bars"], "reason": "2,100+ tech companies; High Tech Campus and product visualization demand."}, "gpt": {"niches": [{"name": "SaaS/Tech", "score": null, "reason": "High-tech ecosystem"}, {"name": "Dental", "score": null, "reason": "High dentist density"}, {"name": "Cleaning", "score": null, "reason": "Large local service market"}]}}, {"city": "Utrecht", "country": "Netherlands", "claude": {"score": 6, "niches": ["Real Estate", "Coffee", "Dental"], "reason": "Solid central ecosystem with no single standout Tier-A niche."}, "gemini": {"score": 8.35, "niches": ["SaaS", "Skincare", "Specialty Coffee"], "reason": "2,400+ SMBs; digital services, wellness/cosmetics and coffee."}, "gpt": {"niches": [{"name": "SaaS/Tech", "score": null, "reason": "Education/digital-services ecosystem"}, {"name": "Dental", "score": null, "reason": "High dentist density"}, {"name": "Cleaning", "score": null, "reason": "Large small-operator market"}]}}, {"city": "Hamburg", "country": "Germany", "claude": {"score": 8, "niches": ["Coffee", "Fashion", "Mixed Nuts/Dried Fruits"], "reason": "Large creative/media ecosystem; nuts/dried fruit often B2B trading."}, "gemini": {"score": 8.75, "niches": ["Fashion", "Protein Bars / Granola", "SaaS"], "reason": "6,100+ businesses; D2C food, fashion and tech."}, "gpt": {"niches": [{"name": "Skincare/Fashion", "score": 8, "reason": "Media/port city with local brands"}, {"name": "Cleaning", "score": 7, "reason": "Large local service market"}, {"name": "SaaS/Tech", "score": 6, "reason": "Tech and digital businesses"}]}}, {"city": "Stuttgart", "country": "Germany", "claude": {"score": 6, "niches": ["Real Estate", "Dental", "SaaS"], "reason": "Wealthy engineering/Mittelstand economy, weaker consumer-CPG signal."}, "gemini": {"score": 7.95, "niches": ["SaaS", "Real Estate", "Specialty Coffee"], "reason": "3,600 businesses; B2B software, property and premium local brands."}, "gpt": {"niches": [{"name": "Skincare/Fashion", "score": 8, "reason": "Affluent market and luxury retail"}, {"name": "Cleaning", "score": 7, "reason": "Large service market"}, {"name": "Dental", "score": 6, "reason": "Many clinics"}]}}, {"city": "Düsseldorf", "country": "Germany", "claude": {"score": 9, "niches": ["Fashion", "Skincare", "Real Estate"], "reason": "Documented German fashion and beauty capital with major trade fairs."}, "gemini": {"score": 8.85, "niches": ["Fashion", "Skincare", "Trade Shows"], "reason": "4,900 businesses; beauty/fashion SMBs and major expo infrastructure."}, "gpt": {"niches": [{"name": "Fashion", "score": 8, "reason": "Major retail hub and expos"}, {"name": "Cleaning", "score": 7, "reason": "Large local service market"}, {"name": "SaaS", "score": 6, "reason": "Tech/business ecosystem"}]}}, {"city": "Mannheim", "country": "Germany", "claude": {"score": 5, "niches": ["Real Estate", "Dental", "Cleaning"], "reason": "Smaller B2B/industrial city with no standout consumer/creative signal."}, "gemini": {"score": 7.25, "niches": ["Real Estate", "SaaS", "Dental"], "reason": "1,800 businesses; industrial SMBs plus property and medical services."}, "gpt": {"niches": [{"name": "Food/Protein Snacks", "score": 7, "reason": "Industrial/local manufacturers"}, {"name": "Cleaning", "score": 7, "reason": "Large local service market"}, {"name": "Skincare", "score": 6, "reason": "Local consumer/beauty market"}]}}, {"city": "Leipzig", "country": "Germany", "claude": {"score": 6, "niches": ["Coffee", "Fashion", "Real Estate"], "reason": "Rising creative/startup reputation and lower cost of entry."}, "gemini": {"score": 7.65, "niches": ["Fashion", "Coffee/CPG", "SaaS"], "reason": "2,200+ businesses; e-commerce, fashion, coffee and startups."}, "gpt": {"niches": [{"name": "Cleaning", "score": 7, "reason": "Large local service market"}, {"name": "Dental", "score": 6, "reason": "Fragmented clinic market"}, {"name": "SaaS", "score": 5, "reason": "Growing tech workforce"}]}}], "niches": ["Skincare", "Protein Bars", "Granola", "Coffee", "Fashion", "Trail Mix", "Mixed Nuts", "SaaS", "Dried Fruits", "Real Estate", "Dental Clinics", "Cleaning Companies", "Roasted Chickpeas", "Rice Cakes"], "rankings": {"Skincare": {"Claude": [{"city": "New York", "score": 9, "scoreType": "city", "reason": "Huge volume, global fashion/beauty capital, but agency saturation is very high."}, {"city": "Los Angeles", "score": 9, "scoreType": "city", "reason": "Large indie fashion/beauty scene and huge creative market; competition is high."}, {"city": "Melbourne", "score": 9, "scoreType": "city", "reason": "Strong creative economy and repeatedly confirmed coffee capital."}, {"city": "Düsseldorf", "score": 9, "scoreType": "city", "reason": "Documented German fashion and beauty capital with major trade fairs."}, {"city": "Miami", "score": 8, "scoreType": "city", "reason": "Booming real estate and wellness economy with a dense international event calendar."}, {"city": "Glasgow", "score": 7, "scoreType": "city", "reason": "Strong small-business environment and independent roaster scene."}, {"city": "Galway", "score": 6, "scoreType": "city", "reason": "Very high micro-business density, but small absolute market."}, {"city": "Adelaide", "score": 5, "scoreType": "city", "reason": "Smaller population but strong business survival and food/wine culture."}], "Gemini": [{"city": "London", "score": 9.25, "scoreType": "city", "reason": "15,000+ early/growth-stage companies; tech, D2C beauty and fashion."}, {"city": "New York", "score": 9.15, "scoreType": "city", "reason": "12,500+ relevant SMBs; D2C cosmetics/snacks and strong 3D packaging/social demand."}, {"city": "Los Angeles", "score": 9.1, "scoreType": "city", "reason": "14,000+ relevant businesses; beauty, fashion, D2C snacks and event/social demand."}, {"city": "Manchester", "score": 8.85, "scoreType": "city", "reason": "5,400+ D2C/software businesses; fashion e-commerce and D2C scaleups."}, {"city": "Düsseldorf", "score": 8.85, "scoreType": "city", "reason": "4,900 businesses; beauty/fashion SMBs and major expo infrastructure."}, {"city": "Sydney", "score": 8.75, "scoreType": "city", "reason": "7,500+ businesses; tech, premium D2C/CPG and 3D product visualization."}, {"city": "Miami", "score": 8.45, "scoreType": "city", "reason": "6,500+ relevant businesses; luxury property, premium packaging and digital-ad demand."}, {"city": "Utrecht", "score": 8.35, "scoreType": "city", "reason": "2,400+ SMBs; digital services, wellness/cosmetics and coffee."}, {"city": "Edinburgh", "score": 8.25, "scoreType": "city", "reason": "2,900+ businesses; tech, coffee and premium consumer niches."}, {"city": "Brisbane", "score": 8.1, "scoreType": "city", "reason": "4,200+ businesses; nutrition, property and lifestyle brands."}], "GPT": [{"city": "Edinburgh", "score": null, "scoreType": "niche", "reason": "Tourism and local beauty market"}, {"city": "Glasgow", "score": null, "scoreType": "niche", "reason": "Local beauty/tourism market"}, {"city": "Cork", "score": null, "scoreType": "niche", "reason": "Local salon market"}, {"city": "Galway", "score": null, "scoreType": "niche", "reason": "Local beauty/CPG opportunity"}, {"city": "Limerick", "score": null, "scoreType": "niche", "reason": "Local salons/beauty"}, {"city": "London", "score": 8, "scoreType": "niche", "reason": "Huge salon/spa industry"}, {"city": "Hamburg", "score": 8, "scoreType": "niche", "reason": "Media/port city with local brands"}, {"city": "Stuttgart", "score": 8, "scoreType": "niche", "reason": "Affluent market and luxury retail"}, {"city": "Los Angeles", "score": 7, "scoreType": "niche", "reason": "Large salon and personal-care market"}, {"city": "Sydney", "score": 7, "scoreType": "niche", "reason": "Growing wellness market"}]}, "Protein Bars": {"Claude": [{"city": "Chicago", "score": 7, "scoreType": "city", "reason": "Large CPG/food base and property market, but less Tier-A concentration."}], "Gemini": [{"city": "New York", "score": 9.15, "scoreType": "city", "reason": "12,500+ relevant SMBs; D2C cosmetics/snacks and strong 3D packaging/social demand."}, {"city": "Los Angeles", "score": 9.1, "scoreType": "city", "reason": "14,000+ relevant businesses; beauty, fashion, D2C snacks and event/social demand."}, {"city": "Hamburg", "score": 8.75, "scoreType": "city", "reason": "6,100+ businesses; D2C food, fashion and tech."}, {"city": "Chicago", "score": 8.65, "scoreType": "city", "reason": "Large CPG/food cluster; packaging, 3D pouch/box and food-expo needs."}, {"city": "Eindhoven", "score": 8.6, "scoreType": "city", "reason": "2,100+ tech companies; High Tech Campus and product visualization demand."}, {"city": "Brisbane", "score": 8.1, "scoreType": "city", "reason": "4,200+ businesses; nutrition, property and lifestyle brands."}], "GPT": [{"city": "Mannheim", "score": 7, "scoreType": "niche", "reason": "Industrial/local manufacturers"}]}, "Granola": {"Claude": [], "Gemini": [{"city": "Melbourne", "score": 8.9, "scoreType": "city", "reason": "6,800+ independent brands; coffee, fashion and food-tech/snack innovation."}, {"city": "Cork", "score": 8.05, "scoreType": "city", "reason": "1,200+ businesses; tech and artisan food cluster."}], "GPT": []}, "Coffee": {"Claude": [{"city": "New York", "score": 9, "scoreType": "city", "reason": "Huge volume, global fashion/beauty capital, but agency saturation is very high."}, {"city": "Los Angeles", "score": 9, "scoreType": "city", "reason": "Large indie fashion/beauty scene and huge creative market; competition is high."}, {"city": "Melbourne", "score": 9, "scoreType": "city", "reason": "Strong creative economy and repeatedly confirmed coffee capital."}, {"city": "London", "score": 9, "scoreType": "city", "reason": "Enormous volume but extremely agency-saturated."}, {"city": "Sydney", "score": 8, "scoreType": "city", "reason": "Large enterprise/fintech-leaning market with strong property and tech opportunity."}, {"city": "Manchester", "score": 8, "scoreType": "city", "reason": "Large SMB base, lower operating costs than London and deep indie coffee scene."}, {"city": "Hamburg", "score": 8, "scoreType": "city", "reason": "Large creative/media ecosystem; nuts/dried fruit often B2B trading."}, {"city": "Brisbane", "score": 7, "scoreType": "city", "reason": "Fast-rising business market with café culture and property opportunity."}, {"city": "Edinburgh", "score": 7, "scoreType": "city", "reason": "Strong SaaS/fintech and university spinouts plus indie coffee."}, {"city": "Glasgow", "score": 7, "scoreType": "city", "reason": "Strong small-business environment and independent roaster scene."}], "Gemini": [{"city": "Melbourne", "score": 8.9, "scoreType": "city", "reason": "6,800+ independent brands; coffee, fashion and food-tech/snack innovation."}, {"city": "Sydney", "score": 8.75, "scoreType": "city", "reason": "7,500+ businesses; tech, premium D2C/CPG and 3D product visualization."}, {"city": "Chicago", "score": 8.65, "scoreType": "city", "reason": "Large CPG/food cluster; packaging, 3D pouch/box and food-expo needs."}, {"city": "Eindhoven", "score": 8.6, "scoreType": "city", "reason": "2,100+ tech companies; High Tech Campus and product visualization demand."}, {"city": "Rotterdam", "score": 8.45, "scoreType": "city", "reason": "3,200+ businesses; food-tech/snacks, coffee and property."}, {"city": "Utrecht", "score": 8.35, "scoreType": "city", "reason": "2,400+ SMBs; digital services, wellness/cosmetics and coffee."}, {"city": "Edinburgh", "score": 8.25, "scoreType": "city", "reason": "2,900+ businesses; tech, coffee and premium consumer niches."}, {"city": "Cork", "score": 8.05, "scoreType": "city", "reason": "1,200+ businesses; tech and artisan food cluster."}, {"city": "Stuttgart", "score": 7.95, "scoreType": "city", "reason": "3,600 businesses; B2B software, property and premium local brands."}, {"city": "Glasgow", "score": 7.75, "scoreType": "city", "reason": "2,600+ businesses; fashion/retail, coffee and property."}], "GPT": [{"city": "Miami", "score": null, "scoreType": "niche", "reason": "Strong hospitality and café ecosystem"}, {"city": "Brisbane", "score": null, "scoreType": "niche", "reason": "Strong café/F&B culture"}, {"city": "Perth", "score": null, "scoreType": "niche", "reason": "Boutique drinks/roaster market"}, {"city": "Adelaide", "score": null, "scoreType": "niche", "reason": "Strong café culture"}, {"city": "Edinburgh", "score": null, "scoreType": "niche", "reason": "High café density"}, {"city": "Glasgow", "score": null, "scoreType": "niche", "reason": "Strong café culture"}, {"city": "Rotterdam", "score": null, "scoreType": "niche", "reason": "Food/roaster ecosystem"}, {"city": "Sydney", "score": 9, "scoreType": "niche", "reason": "Major café culture"}, {"city": "Melbourne", "score": 9, "scoreType": "niche", "reason": "~2,835 outlets and major café culture"}, {"city": "New York", "score": 8, "scoreType": "niche", "reason": "~1,571 cafés and strong urban café culture"}]}, "Fashion": {"Claude": [{"city": "New York", "score": 9, "scoreType": "city", "reason": "Huge volume, global fashion/beauty capital, but agency saturation is very high."}, {"city": "Los Angeles", "score": 9, "scoreType": "city", "reason": "Large indie fashion/beauty scene and huge creative market; competition is high."}, {"city": "Melbourne", "score": 9, "scoreType": "city", "reason": "Strong creative economy and repeatedly confirmed coffee capital."}, {"city": "London", "score": 9, "scoreType": "city", "reason": "Enormous volume but extremely agency-saturated."}, {"city": "Düsseldorf", "score": 9, "scoreType": "city", "reason": "Documented German fashion and beauty capital with major trade fairs."}, {"city": "Miami", "score": 8, "scoreType": "city", "reason": "Booming real estate and wellness economy with a dense international event calendar."}, {"city": "Manchester", "score": 8, "scoreType": "city", "reason": "Large SMB base, lower operating costs than London and deep indie coffee scene."}, {"city": "Hamburg", "score": 8, "scoreType": "city", "reason": "Large creative/media ecosystem; nuts/dried fruit often B2B trading."}, {"city": "Leipzig", "score": 6, "scoreType": "city", "reason": "Rising creative/startup reputation and lower cost of entry."}], "Gemini": [{"city": "London", "score": 9.25, "scoreType": "city", "reason": "15,000+ early/growth-stage companies; tech, D2C beauty and fashion."}, {"city": "New York", "score": 9.15, "scoreType": "city", "reason": "12,500+ relevant SMBs; D2C cosmetics/snacks and strong 3D packaging/social demand."}, {"city": "Los Angeles", "score": 9.1, "scoreType": "city", "reason": "14,000+ relevant businesses; beauty, fashion, D2C snacks and event/social demand."}, {"city": "Melbourne", "score": 8.9, "scoreType": "city", "reason": "6,800+ independent brands; coffee, fashion and food-tech/snack innovation."}, {"city": "Manchester", "score": 8.85, "scoreType": "city", "reason": "5,400+ D2C/software businesses; fashion e-commerce and D2C scaleups."}, {"city": "Düsseldorf", "score": 8.85, "scoreType": "city", "reason": "4,900 businesses; beauty/fashion SMBs and major expo infrastructure."}, {"city": "Hamburg", "score": 8.75, "scoreType": "city", "reason": "6,100+ businesses; D2C food, fashion and tech."}, {"city": "Glasgow", "score": 7.75, "scoreType": "city", "reason": "2,600+ businesses; fashion/retail, coffee and property."}, {"city": "Leipzig", "score": 7.65, "scoreType": "city", "reason": "2,200+ businesses; e-commerce, fashion, coffee and startups."}], "GPT": [{"city": "London", "score": 9, "scoreType": "niche", "reason": "Global apparel center"}, {"city": "Düsseldorf", "score": 8, "scoreType": "niche", "reason": "Major retail hub and expos"}]}, "Trail Mix": {"Claude": [], "Gemini": [], "GPT": []}, "Mixed Nuts": {"Claude": [{"city": "Hamburg", "score": 8, "scoreType": "city", "reason": "Large creative/media ecosystem; nuts/dried fruit often B2B trading."}], "Gemini": [{"city": "Birmingham", "score": 7.45, "scoreType": "city", "reason": "3,800+ businesses; property, food CPG distribution and local dental."}], "GPT": []}, "SaaS": {"Claude": [{"city": "London", "score": 9, "scoreType": "city", "reason": "Enormous volume but extremely agency-saturated."}, {"city": "Sydney", "score": 8, "scoreType": "city", "reason": "Large enterprise/fintech-leaning market with strong property and tech opportunity."}, {"city": "Brisbane", "score": 7, "scoreType": "city", "reason": "Fast-rising business market with café culture and property opportunity."}, {"city": "Edinburgh", "score": 7, "scoreType": "city", "reason": "Strong SaaS/fintech and university spinouts plus indie coffee."}, {"city": "Cork", "score": 6, "scoreType": "city", "reason": "#2 Irish startup ecosystem, but smaller total market."}, {"city": "Eindhoven", "score": 6, "scoreType": "city", "reason": "Strong deep-tech/hardware economy, weaker consumer-brand signal."}, {"city": "Stuttgart", "score": 6, "scoreType": "city", "reason": "Wealthy engineering/Mittelstand economy, weaker consumer-CPG signal."}], "Gemini": [{"city": "London", "score": 9.25, "scoreType": "city", "reason": "15,000+ early/growth-stage companies; tech, D2C beauty and fashion."}, {"city": "Manchester", "score": 8.85, "scoreType": "city", "reason": "5,400+ D2C/software businesses; fashion e-commerce and D2C scaleups."}, {"city": "Sydney", "score": 8.75, "scoreType": "city", "reason": "7,500+ businesses; tech, premium D2C/CPG and 3D product visualization."}, {"city": "Hamburg", "score": 8.75, "scoreType": "city", "reason": "6,100+ businesses; D2C food, fashion and tech."}, {"city": "Chicago", "score": 8.65, "scoreType": "city", "reason": "Large CPG/food cluster; packaging, 3D pouch/box and food-expo needs."}, {"city": "Eindhoven", "score": 8.6, "scoreType": "city", "reason": "2,100+ tech companies; High Tech Campus and product visualization demand."}, {"city": "Miami", "score": 8.45, "scoreType": "city", "reason": "6,500+ relevant businesses; luxury property, premium packaging and digital-ad demand."}, {"city": "Utrecht", "score": 8.35, "scoreType": "city", "reason": "2,400+ SMBs; digital services, wellness/cosmetics and coffee."}, {"city": "Edinburgh", "score": 8.25, "scoreType": "city", "reason": "2,900+ businesses; tech, coffee and premium consumer niches."}, {"city": "Cork", "score": 8.05, "scoreType": "city", "reason": "1,200+ businesses; tech and artisan food cluster."}], "GPT": [{"city": "Chicago", "score": null, "scoreType": "niche", "reason": "Growing startup hub"}, {"city": "Miami", "score": null, "scoreType": "niche", "reason": "Emerging tech presence"}, {"city": "Brisbane", "score": null, "scoreType": "niche", "reason": "Rising business/tech market"}, {"city": "Perth", "score": null, "scoreType": "niche", "reason": "B2B software opportunity"}, {"city": "Eindhoven", "score": null, "scoreType": "niche", "reason": "High-tech ecosystem"}, {"city": "Utrecht", "score": null, "scoreType": "niche", "reason": "Education/digital-services ecosystem"}, {"city": "New York", "score": 9, "scoreType": "niche", "reason": "Large startup/tech scene"}, {"city": "Los Angeles", "score": 8, "scoreType": "niche", "reason": "Creative/tech firms and media-tech startups"}, {"city": "Sydney", "score": 8, "scoreType": "niche", "reason": "Asia-Pacific tech hub"}, {"city": "Melbourne", "score": 7, "scoreType": "niche", "reason": "Health/tech and creative technology scene"}]}, "Dried Fruits": {"Claude": [{"city": "Rotterdam", "score": 7, "scoreType": "city", "reason": "Fast-growing port ecosystem; nuts/dried fruit is largely B2B trade."}, {"city": "Adelaide", "score": 5, "scoreType": "city", "reason": "Smaller population but strong business survival and food/wine culture."}], "Gemini": [{"city": "Adelaide", "score": 7.3, "scoreType": "city", "reason": "2,400+ businesses; premium food/CPG and local producers."}], "GPT": []}, "Real Estate": {"Claude": [{"city": "Düsseldorf", "score": 9, "scoreType": "city", "reason": "Documented German fashion and beauty capital with major trade fairs."}, {"city": "Miami", "score": 8, "scoreType": "city", "reason": "Booming real estate and wellness economy with a dense international event calendar."}, {"city": "Sydney", "score": 8, "scoreType": "city", "reason": "Large enterprise/fintech-leaning market with strong property and tech opportunity."}, {"city": "Manchester", "score": 8, "scoreType": "city", "reason": "Large SMB base, lower operating costs than London and deep indie coffee scene."}, {"city": "Chicago", "score": 7, "scoreType": "city", "reason": "Large CPG/food base and property market, but less Tier-A concentration."}, {"city": "Brisbane", "score": 7, "scoreType": "city", "reason": "Fast-rising business market with café culture and property opportunity."}, {"city": "Birmingham", "score": 7, "scoreType": "city", "reason": "Very large business base but less design-forward consumer-brand density than Manchester."}, {"city": "Edinburgh", "score": 7, "scoreType": "city", "reason": "Strong SaaS/fintech and university spinouts plus indie coffee."}, {"city": "Glasgow", "score": 7, "scoreType": "city", "reason": "Strong small-business environment and independent roaster scene."}, {"city": "Rotterdam", "score": 7, "scoreType": "city", "reason": "Fast-growing port ecosystem; nuts/dried fruit is largely B2B trade."}], "Gemini": [{"city": "Miami", "score": 8.45, "scoreType": "city", "reason": "6,500+ relevant businesses; luxury property, premium packaging and digital-ad demand."}, {"city": "Rotterdam", "score": 8.45, "scoreType": "city", "reason": "3,200+ businesses; food-tech/snacks, coffee and property."}, {"city": "Brisbane", "score": 8.1, "scoreType": "city", "reason": "4,200+ businesses; nutrition, property and lifestyle brands."}, {"city": "Stuttgart", "score": 7.95, "scoreType": "city", "reason": "3,600 businesses; B2B software, property and premium local brands."}, {"city": "Glasgow", "score": 7.75, "scoreType": "city", "reason": "2,600+ businesses; fashion/retail, coffee and property."}, {"city": "Perth", "score": 7.7, "scoreType": "city", "reason": "3,100+ businesses; property, boutique coffee and B2B tech."}, {"city": "Galway", "score": 7.55, "scoreType": "city", "reason": "850+ businesses and 88% SMB; medtech/SaaS plus boutique CPG."}, {"city": "Birmingham", "score": 7.45, "scoreType": "city", "reason": "3,800+ businesses; property, food CPG distribution and local dental."}, {"city": "Houston", "score": 7.35, "scoreType": "city", "reason": "5,800+ relevant SMBs; property, local coffee and dental demand."}, {"city": "Mannheim", "score": 7.25, "scoreType": "city", "reason": "1,800 businesses; industrial SMBs plus property and medical services."}], "GPT": [{"city": "Miami", "score": null, "scoreType": "niche", "reason": "Booming luxury market"}, {"city": "Houston", "score": null, "scoreType": "niche", "reason": "Strong property-development market"}, {"city": "Brisbane", "score": null, "scoreType": "niche", "reason": "Growing property market"}, {"city": "Perth", "score": null, "scoreType": "niche", "reason": "Commercial property market"}, {"city": "Rotterdam", "score": null, "scoreType": "niche", "reason": "Property market"}, {"city": "New York", "score": 8, "scoreType": "niche", "reason": "Large brokerage and proptech market"}]}, "Dental Clinics": {"Claude": [{"city": "Chicago", "score": 7, "scoreType": "city", "reason": "Large CPG/food base and property market, but less Tier-A concentration."}, {"city": "Birmingham", "score": 7, "scoreType": "city", "reason": "Very large business base but less design-forward consumer-brand density than Manchester."}, {"city": "Houston", "score": 6, "scoreType": "city", "reason": "Large population but industrial/energy-led economy; weaker Tier-A signal."}, {"city": "Cork", "score": 6, "scoreType": "city", "reason": "#2 Irish startup ecosystem, but smaller total market."}, {"city": "Eindhoven", "score": 6, "scoreType": "city", "reason": "Strong deep-tech/hardware economy, weaker consumer-brand signal."}, {"city": "Utrecht", "score": 6, "scoreType": "city", "reason": "Solid central ecosystem with no single standout Tier-A niche."}, {"city": "Stuttgart", "score": 6, "scoreType": "city", "reason": "Wealthy engineering/Mittelstand economy, weaker consumer-CPG signal."}, {"city": "Perth", "score": 5, "scoreType": "city", "reason": "Smaller, mining-driven economy; weak signal on Tier-A niches."}, {"city": "Mannheim", "score": 5, "scoreType": "city", "reason": "Smaller B2B/industrial city with no standout consumer/creative signal."}, {"city": "Limerick", "score": 4, "scoreType": "city", "reason": "Smallest Irish market here, more industrial/engineering oriented."}], "Gemini": [{"city": "Birmingham", "score": 7.45, "scoreType": "city", "reason": "3,800+ businesses; property, food CPG distribution and local dental."}, {"city": "Houston", "score": 7.35, "scoreType": "city", "reason": "5,800+ relevant SMBs; property, local coffee and dental demand."}, {"city": "Adelaide", "score": 7.3, "scoreType": "city", "reason": "2,400+ businesses; premium food/CPG and local producers."}, {"city": "Mannheim", "score": 7.25, "scoreType": "city", "reason": "1,800 businesses; industrial SMBs plus property and medical services."}, {"city": "Limerick", "score": 7.05, "scoreType": "city", "reason": "650+ businesses and 90% SMB; regional property, tech and clinic services."}], "GPT": [{"city": "Chicago", "score": null, "scoreType": "niche", "reason": "Hundreds of clinics with repeat patient marketing needs"}, {"city": "Houston", "score": null, "scoreType": "niche", "reason": "Many clinics serving families"}, {"city": "Adelaide", "score": null, "scoreType": "niche", "reason": "Fragmented local clinic market"}, {"city": "Edinburgh", "score": null, "scoreType": "niche", "reason": "Prevalent local clinics"}, {"city": "Glasgow", "score": null, "scoreType": "niche", "reason": "Prevalent local clinics"}, {"city": "Eindhoven", "score": null, "scoreType": "niche", "reason": "High dentist density"}, {"city": "Utrecht", "score": null, "scoreType": "niche", "reason": "High dentist density"}, {"city": "Stuttgart", "score": 6, "scoreType": "niche", "reason": "Many clinics"}, {"city": "Leipzig", "score": 6, "scoreType": "niche", "reason": "Fragmented clinic market"}]}, "Cleaning Companies": {"Claude": [{"city": "Birmingham", "score": 7, "scoreType": "city", "reason": "Very large business base but less design-forward consumer-brand density than Manchester."}, {"city": "Houston", "score": 6, "scoreType": "city", "reason": "Large population but industrial/energy-led economy; weaker Tier-A signal."}, {"city": "Perth", "score": 5, "scoreType": "city", "reason": "Smaller, mining-driven economy; weak signal on Tier-A niches."}, {"city": "Mannheim", "score": 5, "scoreType": "city", "reason": "Smaller B2B/industrial city with no standout consumer/creative signal."}, {"city": "Limerick", "score": 4, "scoreType": "city", "reason": "Smallest Irish market here, more industrial/engineering oriented."}], "Gemini": [], "GPT": [{"city": "Chicago", "score": null, "scoreType": "niche", "reason": "Large urban service market"}, {"city": "Houston", "score": null, "scoreType": "niche", "reason": "Large local service market"}, {"city": "Cork", "score": null, "scoreType": "niche", "reason": "Large fragmented service market"}, {"city": "Galway", "score": null, "scoreType": "niche", "reason": "General local services"}, {"city": "Limerick", "score": null, "scoreType": "niche", "reason": "General local services"}, {"city": "Rotterdam", "score": null, "scoreType": "niche", "reason": "Port/industrial service market"}, {"city": "Eindhoven", "score": null, "scoreType": "niche", "reason": "Large local service market"}, {"city": "Utrecht", "score": null, "scoreType": "niche", "reason": "Large small-operator market"}, {"city": "Birmingham", "score": 7, "scoreType": "niche", "reason": "Large local service market"}, {"city": "Hamburg", "score": 7, "scoreType": "niche", "reason": "Large local service market"}]}, "Roasted Chickpeas": {"Claude": [], "Gemini": [], "GPT": []}, "Rice Cakes": {"Claude": [], "Gemini": [], "GPT": []}}, "claudeNicheScores": {"Coffee": [9, "Independent cafés/roasters are widespread; packaging, social, pop-ups and events fit the full service mix."], "Skincare": [9, "Packaging-driven, Instagram-native and highly compatible with 3D product mockups."], "Fashion": [9, "Closest match to CLO 3D; identity, lookbooks, launches and garment mockups use all four services."], "Real Estate": [7, "Huge operator volume and recurring social need, but weaker 3D/event fit."], "Protein Bars": [7, "CPG packaging, social and launch/trade-show work create strong 3D mockup demand."], "Granola": [7, "Similar to protein bars, with steady packaging and social demand."], "SaaS": [6, "Good brand/event work for early-stage firms, but funded SaaS hires in-house quickly."], "Dental Clinics": [5, "Steady trust-driven branding need, but little 3D/event relevance."], "Trail Mix": [5, "Good packaging/social fit, but the category is smaller and often private-label."], "Roasted Chickpeas": [5, "Trendy DTC fit but low absolute business count per city."], "Mixed Nuts": [4, "Much of the city-level supply in Rotterdam/Hamburg is B2B commodity trading."], "Dried Fruits": [4, "Similar B2B-trade caveat to mixed nuts."], "Cleaning Companies": [3, "Price-sensitive, low visual differentiation and weak premium-agency fit."], "Rice Cakes": [3, "Mature category dominated by large incumbents with few independent SMB targets."]}, "geminiNicheScores": {"Skincare": [9.2, "Highest packaging/social/3D alignment; 78% SMB in the source matrix."], "Protein Bars": [9.16, "Very strong 3D packaging + social + outsourcing fit; 72% SMB."], "Granola": [8.89, "Strong packaging/social demand and 75% SMB density."], "Coffee": [8.88, "Strong identity, packaging, social and event fit; 82% SMB."], "Fashion": [8.65, "Strong recurring social and branding demand; 80% SMB."], "Trail Mix": [8.42, "Good 3D packaging/social fit, but mid-level market density."], "Mixed Nuts": [8.42, "Included with Trail Mix in the source matrix; 70% SMB."], "SaaS": [8.38, "Strong event/brand/3D need, with 68% SMB."], "Dried Fruits": [8.2, "Strong packaging/3D and social fit; 74% SMB."], "Real Estate": [7.25, "Large SMB volume and recurring social demand, but weaker event/3D fit."], "Dental Clinics": [5.15, "Stable branding/social need but low 3D/event relevance."], "Cleaning Companies": [3.65, "High SMB share but weak premium creative fit."], "Roasted Chickpeas": [8.2, "Grouped with Dried Fruits & Snacks in the source matrix; score is the grouped category score."], "Rice Cakes": [8.2, "Grouped with Dried Fruits & Snacks in the source matrix; score is the grouped category score."]}, "finalMaps": {"Claude": {"Skincare": ["New York", "Los Angeles", "Miami", "Melbourne", "Adelaide", "Glasgow", "Galway", "Düsseldorf", "London"], "Protein Bars": ["Chicago", "New York", "Los Angeles"], "Granola": ["Chicago", "New York", "Cork", "Rotterdam", "Hamburg"], "Coffee": ["New York", "Los Angeles", "Sydney", "Melbourne", "Brisbane", "Adelaide", "London", "Manchester", "Edinburgh", "Glasgow", "Galway", "Rotterdam", "Utrecht", "Hamburg", "Leipzig"], "Fashion": ["New York", "Los Angeles", "Miami", "Melbourne", "London", "Manchester", "Hamburg", "Düsseldorf", "Leipzig"], "Trail Mix": ["Brisbane"], "Mixed Nuts": ["Hamburg", "Rotterdam", "Adelaide", "Birmingham"], "SaaS": ["Sydney", "Brisbane", "London", "Edinburgh", "Cork", "Eindhoven", "Stuttgart"], "Dried Fruits": ["Adelaide", "Rotterdam", "Birmingham", "Hamburg"], "Real Estate": ["Chicago", "Miami", "Houston", "Sydney", "Brisbane", "Perth", "Manchester", "Birmingham", "Edinburgh", "Glasgow", "Cork", "Galway", "Limerick", "Rotterdam", "Eindhoven", "Utrecht", "Stuttgart", "Düsseldorf", "Mannheim", "Leipzig"], "Dental Clinics": ["Chicago", "Houston", "Perth", "Birmingham", "Cork", "Limerick", "Eindhoven", "Utrecht", "Stuttgart", "Mannheim"], "Cleaning Companies": ["Houston", "Perth", "Birmingham", "Limerick", "Mannheim"], "Roasted Chickpeas": [], "Rice Cakes": []}, "Gemini": {"Skincare": ["New York", "Los Angeles", "Miami", "Sydney", "Brisbane", "London", "Manchester", "Edinburgh", "Utrecht", "Düsseldorf"], "Protein Bars": ["New York", "Los Angeles", "Chicago", "Brisbane", "Eindhoven", "Hamburg"], "Granola": ["Melbourne", "Cork"], "Coffee": ["Chicago", "Houston", "Sydney", "Melbourne", "Perth", "Adelaide", "Edinburgh", "Glasgow", "Cork", "Galway", "Rotterdam", "Eindhoven", "Utrecht", "Stuttgart", "Leipzig"], "Fashion": ["New York", "Los Angeles", "Melbourne", "London", "Manchester", "Glasgow", "Hamburg", "Düsseldorf", "Leipzig"], "Trail Mix": [], "Mixed Nuts": ["Birmingham"], "SaaS": ["Chicago", "Miami", "Sydney", "Perth", "London", "Manchester", "Edinburgh", "Cork", "Galway", "Limerick", "Eindhoven", "Utrecht", "Hamburg", "Stuttgart", "Mannheim", "Leipzig"], "Dried Fruits": ["Adelaide"], "Real Estate": ["Miami", "Houston", "Brisbane", "Perth", "Birmingham", "Glasgow", "Galway", "Limerick", "Rotterdam", "Stuttgart", "Mannheim"], "Dental Clinics": ["Houston", "Adelaide", "Birmingham", "Limerick", "Mannheim"], "Cleaning Companies": [], "Roasted Chickpeas": [], "Rice Cakes": []}, "GPT": {"Skincare": ["Los Angeles", "Sydney", "Melbourne", "London", "Manchester", "Birmingham", "Edinburgh", "Glasgow", "Cork", "Galway", "Limerick", "Hamburg", "Stuttgart", "Mannheim"], "Protein Bars": ["Mannheim", "New York", "Los Angeles"], "Granola": ["New York", "Los Angeles", "London"], "Coffee": ["New York", "Los Angeles", "Miami", "Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide", "London", "Manchester", "Birmingham", "Edinburgh", "Glasgow", "Rotterdam"], "Fashion": ["London", "Düsseldorf", "Los Angeles", "Sydney", "Melbourne", "Manchester"], "Trail Mix": ["Brisbane"], "Mixed Nuts": ["London", "Birmingham"], "SaaS": ["New York", "Los Angeles", "Chicago", "Miami", "Sydney", "Melbourne", "Brisbane", "Perth", "Eindhoven", "Utrecht", "Hamburg", "Düsseldorf", "Leipzig", "London"], "Dried Fruits": ["London", "Birmingham"], "Real Estate": ["New York", "Miami", "Houston", "Brisbane", "Perth", "Rotterdam", "London", "Sydney"], "Dental Clinics": ["Chicago", "Houston", "Adelaide", "Edinburgh", "Glasgow", "Eindhoven", "Utrecht", "Stuttgart", "Leipzig"], "Cleaning Companies": ["Chicago", "Houston", "Manchester", "Birmingham", "Cork", "Galway", "Limerick", "Rotterdam", "Eindhoven", "Utrecht", "Hamburg", "Stuttgart", "Düsseldorf", "Mannheim", "Leipzig"], "Roasted Chickpeas": [], "Rice Cakes": []}}};
+
+const esc = s => String(s ?? "").replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[m]);
+
+function tags(items){
+  return items.map(x => `<span class="tag">${esc(x)}</span>`).join("");
+}
+
+function gptCard(obj){
+  const items = obj.niches.slice(0,3);
+  return `<div class="model-card gpt">
+    <div class="score-line"><span class="score">Top 3</span><span class="score-label">published niche scores where available</span></div>
+    ${items.map(i => `<div class="gpt-item"><strong>${esc(i.name)}</strong> <span class="mini-score">${i.score == null ? "N/S" : i.score + "/10"}</span><div class="reason">${esc(i.reason)}</div></div>`).join("")}
+  </div>`;
+}
+
+function cityCard(model, obj){
+  const cls = model.toLowerCase();
+  return `<div class="model-card ${cls}">
+    <div class="score-line"><span class="score">${obj.score}/10</span><span class="score-label">overall city priority</span></div>
+    <div class="tags">${tags(obj.niches)}</div>
+    <div class="reason">${esc(obj.reason)}</div>
+  </div>`;
+}
+
+function cleanCityName(value){
+  return String(value ?? "")
+    .replace(/[\u200B-\u200D\uFEFF]/g, "")
+    .trim();
+}
+
+function renderCities(){
+  const tbody = document.querySelector("#cityTable tbody");
+  const q = document.querySelector("#citySearch").value.toLowerCase().trim();
+  const country = document.querySelector("#countryFilter").value;
+  tbody.innerHTML = DATA.cities.filter(r =>
+    (!q || cleanCityName(r.city).toLowerCase().includes(q) || r.country.toLowerCase().includes(q)) &&
+    (!country || r.country === country)
+  ).map((r, i) => {
+    const cityName = cleanCityName(r.city) || (i === 0 ? "New York" : "");
+    return `<tr>
+    <td class="city-cell">${esc(cityName)}<span class="country">${esc(r.country)}</span></td>
+    <td>${cityCard("Claude",r.claude)}</td>
+    <td>${cityCard("Gemini",r.gemini)}</td>
+    <td>${gptCard(r.gpt)}</td>
+  </tr>`;
+  }).join("");
+}
+
+function renderRankingList(items, limit){
+  const shown = items.slice(0,limit);
+  if(!shown.length) return `<div class="small">No city-level recommendation published for this niche.</div>`;
+  return `<ol class="rank-list">${shown.map((x,i) => `<li class="rank-item">
+    <span class="rank-no">${i+1}</span>
+    <span><b>${esc(x.city)}</b><div class="rank-sub">${x.scoreType === "niche" ? "niche-specific score" : "overall city priority score"}</div></span>
+    <span class="rank-score">${x.score == null ? "N/S" : x.score + "/10"}</span>
+  </li>`).join("")}</ol>`;
+}
+
+function renderRanking(containerId, limit){
+  const root = document.getElementById(containerId);
+  root.innerHTML = DATA.niches.map(n => {
+    const r = DATA.rankings[n];
+    return `<div class="niche-row">
+      <div class="niche-title"><span>${esc(n)}</span><span class="badge">${limit===10?"Top 10":"Top 3"}</span></div>
+      <div class="rank-grid">
+        <div class="rank-col"><div class="rank-head"><span>Claude</span><span class="badge city">city score</span></div>${renderRankingList(r.Claude,limit)}</div>
+        <div class="rank-col"><div class="rank-head"><span>Gemini</span><span class="badge city">city score</span></div>${renderRankingList(r.Gemini,limit)}</div>
+        <div class="rank-col"><div class="rank-head"><span>GPT</span><span class="badge niche">niche score</span></div>${renderRankingList(r.GPT,limit)}</div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function renderFinal(){
+  const root = document.getElementById("finalContainer");
+  root.innerHTML = ["Claude","Gemini","GPT"].map(model => `
+    <div class="final-card">
+      <div class="final-card-head">${model}<span>Recommended city coverage by niche</span></div>
+      <div class="final-body">
+        ${DATA.niches.map(n => {
+          const list = DATA.finalMaps[model][n] || [];
+          return `<div class="final-item"><h4>${esc(n)}</h4>
+            <div class="city-chips">${list.length ? list.map(c => `<span class="city-chip">${esc(c)}</span>`).join("") : `<span class="small">No explicit city recommendation in the supplied report.</span>`}</div>
+          </div>`;
+        }).join("")}
+      </div>
+    </div>`).join("");
+}
+
+
+function canonicalNiche(name){
+  const n = String(name || "").toLowerCase();
+  if(n.includes("skincare") || n.includes("beauty")) return "Skincare";
+  if(n.includes("protein")) return "Protein Bars";
+  if(n.includes("granola")) return "Granola";
+  if(n.includes("coffee")) return "Coffee";
+  if(n.includes("fashion") || n.includes("apparel")) return "Fashion";
+  if(n.includes("trail mix")) return "Trail Mix";
+  if(n.includes("mixed nuts") || n === "nuts") return "Mixed Nuts";
+  if(n.includes("saas") || n.includes("tech")) return "SaaS";
+  if(n.includes("dried fruit") || (n.includes("fruit") && !n.includes("food"))) return "Dried Fruits";
+  if(n.includes("real estate") || n.includes("proptech")) return "Real Estate";
+  if(n.includes("dental")) return "Dental Clinics";
+  if(n.includes("cleaning")) return "Cleaning Companies";
+  if(n.includes("chickpea")) return "Roasted Chickpeas";
+  if(n.includes("rice cake")) return "Rice Cakes";
+  return null;
+}
+
+function buildConsensus(){
+  const map = new Map();
+
+  DATA.cities.forEach(row => {
+    [
+      ["Claude", row.claude.niches],
+      ["Gemini", row.gemini.niches],
+      ["GPT", row.gpt.niches.map(x => x.name)]
+    ].forEach(([model, list]) => {
+      list.forEach(raw => {
+        const niche = canonicalNiche(raw);
+        if(!niche) return;
+        const key = row.city + "||" + niche;
+        if(!map.has(key)){
+          map.set(key, {city:row.city, country:row.country, niche, models:[]});
+        }
+        const item = map.get(key);
+        if(!item.models.includes(model)) item.models.push(model);
+      });
+    });
+  });
+
+  return [...map.values()].sort((a,b) => {
+    if(b.models.length !== a.models.length) return b.models.length - a.models.length;
+    if(a.city !== b.city) return a.city.localeCompare(b.city);
+    return a.niche.localeCompare(b.niche);
+  });
+}
+
+const CONSENSUS = buildConsensus();
+
+function renderConsensus(){
+  const tbody = document.querySelector("#consensusTable tbody");
+  const q = document.querySelector("#consensusSearch").value.toLowerCase().trim();
+  const count = document.querySelector("#consensusCount").value;
+  const niche = document.querySelector("#consensusNiche").value;
+
+  const rows = CONSENSUS.filter(r =>
+    (!q || r.city.toLowerCase().includes(q) || r.niche.toLowerCase().includes(q) || r.models.join(" ").toLowerCase().includes(q)) &&
+    (!count || String(r.models.length) === count) &&
+    (!niche || r.niche === niche)
+  );
+
+  tbody.innerHTML = rows.map((r, i) => `
+    <tr>
+      <td class="city-cell">
+        <span class="city-index">${i+1}</span>${esc(r.city)}
+        <span class="country">${esc(r.country)}</span>
+      </td>
+      <td><b>${esc(r.niche)}</b></td>
+      <td><span class="consensus-count">${r.models.length}</span></td>
+      <td>
+        ${r.models.map(m => `<span class="model-chip ${m.toLowerCase()}">${m}</span>`).join("")}
+      </td>
+      <td class="agreement-${r.models.length}">
+        ${r.models.length === 3 ? "All 3 agree" : r.models.length === 2 ? "2 of 3 agree" : "Single-model recommendation"}
+      </td>
+    </tr>
+  `).join("");
+}
+
+const countries = [...new Set(DATA.cities.map(x=>x.country))].sort();
+const filter = document.getElementById("countryFilter");
+countries.forEach(c => filter.insertAdjacentHTML("beforeend", `<option value="${esc(c)}">${esc(c)}</option>`));
+
+const consensusNicheFilter = document.getElementById("consensusNiche");
+[...new Set(CONSENSUS.map(x => x.niche))].sort().forEach(n => {
+  consensusNicheFilter.insertAdjacentHTML("beforeend", `<option value="${esc(n)}">${esc(n)}</option>`);
+});
+document.getElementById("consensusSearch").addEventListener("input", renderConsensus);
+document.getElementById("consensusCount").addEventListener("change", renderConsensus);
+consensusNicheFilter.addEventListener("change", renderConsensus);
+
+document.getElementById("citySearch").addEventListener("input", renderCities);
+filter.addEventListener("change", renderCities);
+
+document.querySelectorAll(".nav button").forEach(btn => btn.addEventListener("click", () => {
+  document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById(btn.dataset.target).scrollIntoView({behavior:"smooth",block:"start"});
+}));
+
+renderCities();
+renderRanking("top10Container",10);
+renderRanking("top3Container",3);
+renderFinal();
+renderConsensus();
+</script>
+</body>
+</html>
